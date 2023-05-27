@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "tatersync",
+  "version": "${version}",
+  "name": "TaterSync",
+  "description": "",
+  "authors": ["p0t4t0sandwich"],
+  "contact": {
+    "repo": "https://github.com/p0t4t0sandwich/TaterSync"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/TaterSync/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "server": [
+      "ca.sperrer.p0t4t0sandwich.tatersync.fabric.FabricMain"
+    ]
+  },
+  "mixins": [
+    "tatersync.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

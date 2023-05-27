@@ -1,0 +1,5 @@
+name: TaterSync
+version: '${version}'
+author: p0t4t0sandwich
+main: ca.sperrer.p0t4t0sandwich.lppronouns.bungee.BungeeMain
+description: A plugin to sync player data across servers
