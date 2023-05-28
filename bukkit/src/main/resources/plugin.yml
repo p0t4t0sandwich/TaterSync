@@ -1,6 +1,11 @@
 name: TaterSync
 version: '${version}'
 author: p0t4t0sandwich
+api-version: 1.13
 main: ca.sperrer.p0t4t0sandwich.tatersync.bukkit.BukkitMain
 description: A plugin to sync player data across servers
 folia-supported: true
+commands:
+  tatersync:
+    description: TaterSync command
+    usage: /tatersync [args]

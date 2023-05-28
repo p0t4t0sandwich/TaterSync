@@ -1,5 +1,8 @@
 package ca.sperrer.p0t4t0sandwich.tatersync.common.player;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TaterItem {
     /**
      * Class used to abstract the player inventory item data
@@ -9,34 +12,29 @@ public class TaterItem {
      * meta: The item's metadata.
      */
     private final String id;
-    private final int count;
-    private final int damage;
+    private final int amount;
     private final TaterItemMeta meta;
 
     /**
      * Constructor for the TaterItem class.
      * @param id The item's id.
-     * @param count The item's count.
-     * @param damage The item's damage.
+     * @param amount The item's count.
      */
-    public TaterItem(String id, int count, int damage) {
+    public TaterItem(String id, int amount) {
         this.id = id;
-        this.count = count;
-        this.damage = damage;
-        this.meta = null;
+        this.amount = amount;
+        this.meta = new TaterItemMeta(0, "", new String[0]);
     }
 
     /**
      * Constructor for the TaterItem class.
      * @param id The item's id.
-     * @param count The item's count.
-     * @param damage The item's damage.
+     * @param amount The item's count.
      * @param meta The item's metadata.
      */
-    public TaterItem(String id, int count, int damage, TaterItemMeta meta) {
+    public TaterItem(String id, int amount, TaterItemMeta meta) {
         this.id = id;
-        this.count = count;
-        this.damage = damage;
+        this.amount = amount;
         this.meta = meta;
     }
 
@@ -52,16 +50,8 @@ public class TaterItem {
      * Get the item's count.
      * @return The item's count.
      */
-    public int getCount() {
-        return this.count;
-    }
-
-    /**
-     * Get the item's damage.
-     * @return The item's damage.
-     */
-    public int getDamage() {
-        return this.damage;
+    public int getAmount() {
+        return this.amount;
     }
 
     /**
@@ -70,5 +60,16 @@ public class TaterItem {
      */
     public TaterItemMeta getMeta() {
         return this.meta;
+    }
+
+    public HashMap<String, Object> serialize() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("id", this.id);
+        map.put("amount", this.amount);
+        if (this.meta != null) {
+            map.put("meta", new HashMap<>());
+//            map.put("meta", this.meta.serialize());
+        }
+        return map;
     }
 }

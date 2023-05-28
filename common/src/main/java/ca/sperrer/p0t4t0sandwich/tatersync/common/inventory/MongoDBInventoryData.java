@@ -6,6 +6,9 @@ import ca.sperrer.p0t4t0sandwich.tatersync.common.player.TaterItemMeta;
 import ca.sperrer.p0t4t0sandwich.tatersync.common.player.TaterPlayer;
 import ca.sperrer.p0t4t0sandwich.tatersync.common.storage.Database;
 import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 
 import java.util.Arrays;
 
@@ -21,20 +24,41 @@ public class MongoDBInventoryData implements InventoryData {
      */
     public void storeInventory(TaterPlayer player) {
         try {
-            String playerUUID = player.getUUID().toString();
+            String player_uuid = player.getUUID().toString();
             String currentServer = player.getCurrentServer();
             TaterInventory inventory = player.getInventory();
             TaterInventory enderChest = player.getEnderChest();
 
-            for (int i = 0; i < inventory.getSize(); i++) {
-                TaterItem item = inventory.getItem(i);
-                TaterItemMeta meta = item.getMeta();
+            MongoClient mongoClient = this.db.getConnection();
+            String database = this.db.getDatabase();
 
-                System.out.println("Storing item: " + item.toString());
+            // Get player data
+            MongoDatabase db = mongoClient.getDatabase(database);
+            MongoCollection<Document> collection = db.getCollection("player_data");
+            Document query = new Document("player_uuid", player_uuid);
+            Document player_data = collection.find(query).first();
+
+            // If player data doesn't exist, create it
+            if (player_data == null) {
+                Document new_player_data = new Document();
+                new_player_data.append("player_name", player.getName());
+                new_player_data.append("player_uuid", player_uuid);
+                collection.insertOne(new_player_data);
             }
 
+            // Store inventory data
+            Document inventory_data = new Document();
+            inventory_data.append("current_server", currentServer);
+            inventory_data.append("inventory", inventory.serialize());
+//            inventory_data.append("enderchest", enderChest.serialize());
+
+            // Update inventory
+            Document update = new Document("player_inventory", inventory_data);
+            collection.updateOne(query, new Document("$set", update));
+
         } catch (Exception e) {
-            System.err.println(Arrays.toString(e.getStackTrace()));
+            System.err.println("Error storing inventory for player " + player.getName());
+            e.printStackTrace();
         }
     }
 

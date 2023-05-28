@@ -24,7 +24,7 @@ public class TestInvCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         AtomicBoolean success = new AtomicBoolean(false);
-        runTaskAsync(() -> {
+//        runTaskAsync(() -> {
             try {
                 // Check if sender is a player
                 if ((sender instanceof Player)) {
@@ -34,7 +34,7 @@ public class TestInvCommand implements CommandExecutor {
 
                     if (args.length == 0) {
                         success.set(false);
-                        return;
+                        return false;
                     } else if (args.length == 1) {
                         TaterPlayer taterPlayer = mapPlayer(player);
                         switch (args[0]) {
@@ -48,17 +48,18 @@ public class TestInvCommand implements CommandExecutor {
                                 break;
                             default:
                                 success.set(false);
-                                return;
+                                return false;
                         }
                     }
 
-                    player.sendMessage(Arrays.toString(new ComponentBuilder(text).color(ChatColor.GREEN).create()));
+                    player.sendMessage("§2" + text);
                     success.set(true);
                 }
             } catch (Exception e) {
-                System.err.println(Arrays.toString(e.getStackTrace()));
+                e.printStackTrace();
+//                System.err.println(Arrays.toString(e.getStackTrace()));
             }
-        });
+//        });
         return success.get();
     }
 }

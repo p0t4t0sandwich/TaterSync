@@ -1,8 +1,11 @@
 package ca.sperrer.p0t4t0sandwich.tatersync.bukkit;
 
 import ca.sperrer.p0t4t0sandwich.tatersync.bukkit.listeners.BukkitEventListener;
+import ca.sperrer.p0t4t0sandwich.tatersync.bukkit.test.TestInvCommand;
 import ca.sperrer.p0t4t0sandwich.tatersync.common.TaterSync;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Objects;
 
 import static ca.sperrer.p0t4t0sandwich.tatersync.common.Utils.*;
 
@@ -50,6 +53,7 @@ public class BukkitMain extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BukkitEventListener(), this);
 
         // Register commands
+        Objects.requireNonNull(getCommand("tatersync")).setExecutor(new TestInvCommand());
 
         // Plugin enable message
         getLogger().info("TaterSync has been enabled!");
@@ -58,6 +62,6 @@ public class BukkitMain extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin disable message
-        getLogger().info("LPPronouns has been disabled!");
+        getLogger().info("TaterSync has been disabled!");
     }
 }

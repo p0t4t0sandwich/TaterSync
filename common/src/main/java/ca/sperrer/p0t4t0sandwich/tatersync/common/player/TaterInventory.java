@@ -1,5 +1,10 @@
 package ca.sperrer.p0t4t0sandwich.tatersync.common.player;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class TaterInventory {
     /**
      * Class used to abstract the player inventory data
@@ -70,7 +75,11 @@ public class TaterInventory {
         this.items[index] = item;
     }
 
-//    public void setItem(int index, int id, int count, int damage) {
-//        this.items[index] = new TaterItem(id, count, damage);
-//    }
+    public ArrayList<HashMap<String, Object>> serialize() {
+        ArrayList<HashMap<String, Object>> list = new ArrayList<>();
+        for (TaterItem item : this.items) {
+            list.add(item.serialize());
+        }
+        return list;
+    }
 }

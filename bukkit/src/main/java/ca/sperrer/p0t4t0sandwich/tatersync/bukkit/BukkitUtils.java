@@ -33,22 +33,35 @@ public class BukkitUtils {
      * @return TaterItem
      */
     public static TaterItem mapItemStack(ItemStack itemStack) {
+        if (itemStack == null) {
+            return new TaterItem(Material.AIR.toString(), 0);
+        }
+
         ItemMeta itemMeta = itemStack.getItemMeta();
         Map<String, Object> serializedItem = itemStack.serialize();
 
-        TaterItemMeta inventoryItemMeta = null;
+        //
+        System.out.println("Item: " + serializedItem);
+        //
+
+        TaterItemMeta inventoryItemMeta = new TaterItemMeta(0, "", new String[0]);
         if (itemMeta != null) {
             Map<String, Object> serializedMeta = itemMeta.serialize();
+
+            //
+            System.out.println("ItemMeta: " + serializedMeta);
+            //
+
             inventoryItemMeta = new TaterItemMeta(
+                    (int) serializedMeta.getOrDefault("Damage", 0),
                     (String) serializedMeta.getOrDefault("displayName", ""),
                     (String[]) serializedMeta.getOrDefault("lore", new String[0])
             );
         }
 
         return new TaterItem(
-                (String) serializedItem.getOrDefault("type", Material.AIR.data.getName()),
+                (String) serializedItem.getOrDefault("type", Material.AIR.toString()),
                 (int) serializedItem.getOrDefault("amount", 0),
-                (int) serializedItem.getOrDefault("durability", 0),
                 inventoryItemMeta
         );
 
