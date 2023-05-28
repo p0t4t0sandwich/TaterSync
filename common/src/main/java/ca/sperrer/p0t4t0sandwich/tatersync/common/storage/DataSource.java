@@ -1,21 +1,21 @@
 package ca.sperrer.p0t4t0sandwich.tatersync.common.storage;
 
-import ca.sperrer.p0t4t0sandwich.tatersync.common.pronouns.MongoDBPronounsData;
-import ca.sperrer.p0t4t0sandwich.tatersync.common.pronouns.MySQLPronounsData;
-import ca.sperrer.p0t4t0sandwich.tatersync.common.pronouns.PronounsData;
+import ca.sperrer.p0t4t0sandwich.tatersync.common.inventory.InventoryData;
+import ca.sperrer.p0t4t0sandwich.tatersync.common.inventory.MongoDBInventoryData;
+import ca.sperrer.p0t4t0sandwich.tatersync.common.inventory.MySQLInventoryData;
 import dev.dejvokep.boostedyaml.YamlDocument;
 
 import java.util.Arrays;
 
 
-public interface DataSource {
+public class DataSource {
     /**
      * Get the database
      * @param type The type of database
      * @param config The config file
      * @return The database
      */
-    static Database getDatabase(String type, YamlDocument config) {
+    public static Database getDatabase(String type, YamlDocument config) {
         try {
             switch (type) {
                 case "mysql":
@@ -32,18 +32,17 @@ public interface DataSource {
     }
 
     /**
-     * Get the pronouns data class
-     * @param type The type of database
+     * Get the inventory data class
      * @param database The database
-     * @return The pronouns data class
+     * @return The inventory data class
      */
-    static PronounsData getPronounsData(String type, Database database, YamlDocument config) {
+    public static InventoryData getInventoryData(Database database) {
         try {
-            switch (type) {
+            switch (database.getType()) {
                 case "mysql":
-                    return new MySQLPronounsData(database, config);
+                    return new MySQLInventoryData(database);
                 case "mongodb":
-                    return new MongoDBPronounsData(database, config);
+                    return new MongoDBInventoryData(database);
                 default:
                     return null;
             }

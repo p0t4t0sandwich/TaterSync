@@ -1,6 +1,6 @@
 package ca.sperrer.p0t4t0sandwich.tatersync.common;
 
-import ca.sperrer.p0t4t0sandwich.tatersync.common.pronouns.PronounsData;
+import ca.sperrer.p0t4t0sandwich.tatersync.common.inventory.InventoryData;
 import ca.sperrer.p0t4t0sandwich.tatersync.common.storage.DataSource;
 import ca.sperrer.p0t4t0sandwich.tatersync.common.storage.Database;
 import dev.dejvokep.boostedyaml.YamlDocument;
@@ -25,7 +25,7 @@ public class TaterSync {
     private static TaterSync singleton = null;
     private boolean STARTED = false;
     public Database database;
-    public PronounsData pronounsData;
+    public InventoryData inventoryData;
 
     /**
      * Constructor for the TaterSync class.
@@ -42,7 +42,7 @@ public class TaterSync {
                     Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("config.yml"))
             );
             config.reload();
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             useLogger("Failed to load config.yml!\n" + e.getMessage());
             e.printStackTrace();
         }
@@ -83,15 +83,16 @@ public class TaterSync {
         String type = config.getString("storage.type");
         database = DataSource.getDatabase(type, config);
 
-        pronounsData = DataSource.getPronounsData(type, database, config);
-
-        //
-        System.out.println(type);
-        System.out.println(pronounsData);
-        //
-
-//        pronounsData = DataSource.getTrackerData(type, database, getPronounsMap());
+        inventoryData = DataSource.getInventoryData(database);
 
         useLogger("TaterSync has been started!");
+    }
+
+    /**
+     * Get the server name from the config
+     * @return The server name
+     */
+    public static String getServerName() {
+        return config.getString("server.name");
     }
 }
