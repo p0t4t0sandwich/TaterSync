@@ -6,6 +6,7 @@ import dev.dejvokep.boostedyaml.YamlDocument;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class MySQLDatabase extends Database<Connection> {
     /**
@@ -35,7 +36,7 @@ public class MySQLDatabase extends Database<Connection> {
         config.setJdbcUrl(URI);
         config.setUsername(username);
         config.setPassword(password);
-        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        config.setDriverClassName("ca.sperrer.p0t4t0sandwich.tatersync.lib.mysql.cj.jdbc.Driver");
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
@@ -50,7 +51,7 @@ public class MySQLDatabase extends Database<Connection> {
         try {
             return ds.getConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println(Arrays.toString(e.getStackTrace()));
             return null;
         }
     }

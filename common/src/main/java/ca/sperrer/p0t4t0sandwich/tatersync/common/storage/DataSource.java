@@ -5,6 +5,8 @@ import ca.sperrer.p0t4t0sandwich.tatersync.common.pronouns.MySQLPronounsData;
 import ca.sperrer.p0t4t0sandwich.tatersync.common.pronouns.PronounsData;
 import dev.dejvokep.boostedyaml.YamlDocument;
 
+import java.util.Arrays;
+
 
 public interface DataSource {
     /**
@@ -14,13 +16,18 @@ public interface DataSource {
      * @return The database
      */
     static Database getDatabase(String type, YamlDocument config) {
-        switch (type) {
-            case "mysql":
-                return new MySQLDatabase(config);
-            case "mongodb":
-                return new MongoDBDatabase(config);
-            default:
-                return null;
+        try {
+            switch (type) {
+                case "mysql":
+                    return new MySQLDatabase(config);
+                case "mongodb":
+                    return new MongoDBDatabase(config);
+                default:
+                    return null;
+            }
+        } catch (Exception e) {
+            System.err.println(Arrays.toString(e.getStackTrace()));
+            return null;
         }
     }
 
@@ -31,13 +38,18 @@ public interface DataSource {
      * @return The pronouns data class
      */
     static PronounsData getPronounsData(String type, Database database, YamlDocument config) {
-        switch (type) {
-            case "mysql":
-                return new MySQLPronounsData(database, config);
-            case "mongodb":
-                return new MongoDBPronounsData(database, config);
-            default:
-                return null;
+        try {
+            switch (type) {
+                case "mysql":
+                    return new MySQLPronounsData(database, config);
+                case "mongodb":
+                    return new MongoDBPronounsData(database, config);
+                default:
+                    return null;
+            }
+        } catch (Exception e) {
+            System.err.println(Arrays.toString(e.getStackTrace()));
+            return null;
         }
     }
 }
