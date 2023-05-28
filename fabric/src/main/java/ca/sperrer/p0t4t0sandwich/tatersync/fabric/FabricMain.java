@@ -1,6 +1,6 @@
 package ca.sperrer.p0t4t0sandwich.tatersync.fabric;
 
-import ca.sperrer.p0t4t0sandwich.tatersync.common.LPPronouns;
+import ca.sperrer.p0t4t0sandwich.tatersync.common.TaterSync;
 import ca.sperrer.p0t4t0sandwich.tatersync.fabric.listeners.FabricEventListener;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -8,10 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FabricMain implements DedicatedServerModInitializer {
-    public LPPronouns LPPronouns;
+    public TaterSync taterSync;
 
     // Logger
-    public final Logger logger = LoggerFactory.getLogger("playtimeutils");
+    public final Logger logger = LoggerFactory.getLogger("tatersync");
 
     // Get server type
     public String getServerType() {
@@ -29,16 +29,16 @@ public class FabricMain implements DedicatedServerModInitializer {
         // Singleton instance
         instance = this;
 
-        logger.info("[LPPronouns]: LPPronouns is running on " + getServerType() + ".");
+        logger.info("[TaterSync]: TaterSync is running on " + getServerType() + ".");
 
-        // Start LPPronouns
-        LPPronouns = new LPPronouns("config", logger);
-        LPPronouns.start();
+        // Start TaterSync
+        taterSync = new TaterSync("config", logger);
+        taterSync.start();
 
         // Register event listeners
         ServerPlayConnectionEvents.JOIN.register(new FabricEventListener());
 
         // Mod enable message
-        logger.info("[LPPronouns]: LPPronouns has been enabled!");
+        logger.info("[TaterSync]: TaterSync has been enabled!");
     }
 }

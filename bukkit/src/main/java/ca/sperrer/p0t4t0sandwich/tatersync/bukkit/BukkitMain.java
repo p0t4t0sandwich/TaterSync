@@ -1,14 +1,13 @@
 package ca.sperrer.p0t4t0sandwich.tatersync.bukkit;
 
-import ca.sperrer.p0t4t0sandwich.tatersync.bukkit.commands.PronounsCommand;
 import ca.sperrer.p0t4t0sandwich.tatersync.bukkit.listeners.BukkitEventListener;
-import ca.sperrer.p0t4t0sandwich.tatersync.common.LPPronouns;
+import ca.sperrer.p0t4t0sandwich.tatersync.common.TaterSync;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import static ca.sperrer.p0t4t0sandwich.tatersync.common.Utils.*;
 
 public class BukkitMain extends JavaPlugin {
-    public LPPronouns LPPronouns;
+    public TaterSync taterSync;
 
     // Singleton instance
     private static BukkitMain instance;
@@ -17,7 +16,13 @@ public class BukkitMain extends JavaPlugin {
     }
 
     public String getServerType() {
-        if (isFolia()) {
+        if (isMagma()) {
+            return "Magma";
+        } else if (isMohist()) {
+            return "Mohist";
+        } else if (isArclight()) {
+            return "Arclight";
+        } else if (isFolia()) {
             return "Folia";
         } else if (isPaper()) {
             return "Paper";
@@ -35,20 +40,19 @@ public class BukkitMain extends JavaPlugin {
         // Singleton instance
         instance = this;
 
-        getLogger().info("LPPronouns is running on " + getServerType() + ".");
+        getLogger().info("TaterSync is running on " + getServerType() + ".");
 
-        // Start LPPronouns
-        LPPronouns = new LPPronouns("plugins", getLogger());
-        LPPronouns.start();
+        // Start TaterSync
+        taterSync = new TaterSync("plugins", getLogger());
+        taterSync.start();
 
         // Register event listener
         getServer().getPluginManager().registerEvents(new BukkitEventListener(), this);
 
         // Register commands
-        getCommand("pronouns").setExecutor(new PronounsCommand());
 
         // Plugin enable message
-        getLogger().info("LPPronouns has been enabled!");
+        getLogger().info("TaterSync has been enabled!");
     }
 
     @Override

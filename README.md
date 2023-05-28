@@ -13,5 +13,6 @@ Inspired by [HuskSync](https://www.spigotmc.org/resources/husksync-1-16-1-19-syn
   - [ ] Set some sort of placeholder item?
   - [ ] Set the item aside, and let the user know that they're not supported?
   - [ ] Implement temporary storage for error-ed items
+  - [ ] Implement logic for item-overflow with larger inventories
 - [ ] Need to get the timing down on player joins/disconnects
-- [ ] Some sort of player store/bank -- similar to Borderlands
+- [ ] Some sort of player bank/vault -- similar to Borderlands

@@ -26,7 +26,7 @@ public class PronounsCommand implements CommandExecutor {
                 if ((sender instanceof Player)) {
                     Player player = (Player) sender;
 
-                    String text = plugin.LPPronouns.commandHandler(mapPlayer(player), args);
+                    String text = "";// plugin.LPPronouns.commandHandler(mapPlayer(player), args);
 
                     player.sendMessage(Arrays.toString(new ComponentBuilder(text).color(ChatColor.GREEN).create()));
                     success.set(true);

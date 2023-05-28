@@ -15,7 +15,7 @@ public class BukkitEventListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         runTaskAsync(() -> {
             try {
-                plugin.LPPronouns.pronounsData.refreshPronouns(mapPlayer(event.getPlayer()));
+                //
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
