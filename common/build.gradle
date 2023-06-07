@@ -11,6 +11,14 @@ dependencies {
     implementation('org.mongodb:mongodb-driver-core:4.9.1')
     implementation('org.mongodb:bson:4.9.1')
 
+    // GSON
+    implementation('com.google.code.gson:gson:2.10.1')
+
+    // NBT library
+    implementation('com.github.Querz:NBT:6.1')
+
+    implementation("me.nullicorn:Nedit:2.2.0")
+
     compileOnly('org.slf4j:slf4j-api:2.0.5')
 }
 
@@ -24,12 +32,21 @@ shadowJar {
         include(dependency('org.mongodb:mongodb-driver-sync:4.9.1'))
         include(dependency('org.mongodb:mongodb-driver-core:4.9.1'))
         include(dependency('org.mongodb:bson:4.9.1'))
+
+        include(dependency('com.google.code.gson:gson:2.10.1'))
+        include(dependency('com.github.Querz:NBT:6.1'))
+        include(dependency('me.nullicorn:Nedit:2.2.0'))
     }
 
-    relocate 'dev.dejvokep', 'ca.sperrer.p0t4t0sandwich.tatersync.lib.dejvokep'
-    relocate 'com.zaxxer.hikari', 'ca.sperrer.p0t4t0sandwich.tatersync.lib.hikari'
-    relocate 'com.mysql', 'ca.sperrer.p0t4t0sandwich.tatersync.lib.mysql'
-    relocate 'org.mongodb', 'ca.sperrer.p0t4t0sandwich.tatersync.lib.mongodb'
+    relocate('dev.dejvokep', 'ca.sperrer.p0t4t0sandwich.template.lib.dejvokep')
+    relocate('com.zaxxer.hikari', 'ca.sperrer.p0t4t0sandwich.template.lib.hikari')
+    relocate('com.mysql', 'ca.sperrer.p0t4t0sandwich.template.lib.mysql')
+    relocate('com.mongodb', 'ca.sperrer.p0t4t0sandwich.template.lib.mongodb')
+    relocate('org.bson', 'ca.sperrer.p0t4t0sandwich.template.lib.bson')
+
+    relocate('com.google.gson', 'ca.sperrer.p0t4t0sandwich.template.lib.gson')
+    relocate('net.querz.nbt', 'ca.sperrer.p0t4t0sandwich.template.lib.nbt')
+    relocate('me.nullicorn.nedit', 'ca.sperrer.p0t4t0sandwich.template.lib.nedit')
 }
 
 artifacts {

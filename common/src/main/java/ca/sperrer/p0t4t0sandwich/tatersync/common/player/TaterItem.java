@@ -1,41 +1,53 @@
 package ca.sperrer.p0t4t0sandwich.tatersync.common.player;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class TaterItem {
     /**
      * Class used to abstract the player inventory item data
+     * Slot: The item's slot.
      * id: The item's id.
-     * count: The item's count.
-     * damage: The item's damage.
+     * Count: The item's count.
      * meta: The item's metadata.
      */
+    private final int Slot;
     private final String id;
-    private final int amount;
-    private final TaterItemMeta meta;
+    private final int Count;
+    private final TaterItemTag meta;
 
     /**
      * Constructor for the TaterItem class.
+     * @param Slot The item's slot.
      * @param id The item's id.
-     * @param amount The item's count.
+     * @param Count The item's count.
      */
-    public TaterItem(String id, int amount) {
+    public TaterItem(int Slot, String id, int Count) {
+        this.Slot = Slot;
         this.id = id;
-        this.amount = amount;
-        this.meta = new TaterItemMeta(0, "", new String[0]);
+        this.Count = Count;
+        this.meta = null;
     }
 
     /**
      * Constructor for the TaterItem class.
+     * @param Slot The item's slot.
      * @param id The item's id.
-     * @param amount The item's count.
+     * @param Count The item's count.
      * @param meta The item's metadata.
      */
-    public TaterItem(String id, int amount, TaterItemMeta meta) {
+    public TaterItem(int Slot, String id, int Count, TaterItemTag meta) {
+        this.Slot = Slot;
         this.id = id;
-        this.amount = amount;
+        this.Count = Count;
         this.meta = meta;
+    }
+
+    /**
+     * Get the item's slot.
+     * @return The item's slot.
+     */
+    public int getSlot() {
+        return this.Slot;
     }
 
     /**
@@ -50,25 +62,29 @@ public class TaterItem {
      * Get the item's count.
      * @return The item's count.
      */
-    public int getAmount() {
-        return this.amount;
+    public int getCount() {
+        return this.Count;
     }
 
     /**
      * Get the item's metadata.
      * @return The item's metadata.
      */
-    public TaterItemMeta getMeta() {
+    public TaterItemTag getMeta() {
         return this.meta;
     }
 
+    /**
+     * Serialize the TaterItem class.
+     * @return The serialized TaterItem class.
+     */
     public HashMap<String, Object> serialize() {
         HashMap<String, Object> map = new HashMap<>();
+        map.put("Slot", this.Slot);
         map.put("id", this.id);
-        map.put("amount", this.amount);
+        map.put("Count", this.Count);
         if (this.meta != null) {
-            map.put("meta", new HashMap<>());
-//            map.put("meta", this.meta.serialize());
+            map.put("tag", this.meta.serialize());
         }
         return map;
     }

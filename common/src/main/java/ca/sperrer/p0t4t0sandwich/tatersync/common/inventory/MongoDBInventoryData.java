@@ -1,16 +1,12 @@
 package ca.sperrer.p0t4t0sandwich.tatersync.common.inventory;
 
 import ca.sperrer.p0t4t0sandwich.tatersync.common.player.TaterInventory;
-import ca.sperrer.p0t4t0sandwich.tatersync.common.player.TaterItem;
-import ca.sperrer.p0t4t0sandwich.tatersync.common.player.TaterItemMeta;
 import ca.sperrer.p0t4t0sandwich.tatersync.common.player.TaterPlayer;
 import ca.sperrer.p0t4t0sandwich.tatersync.common.storage.Database;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-
-import java.util.Arrays;
 
 public class MongoDBInventoryData implements InventoryData {
     private final Database<MongoClient> db;

@@ -4,6 +4,8 @@ import ca.sperrer.p0t4t0sandwich.tatersync.bukkit.BukkitMain;
 import ca.sperrer.p0t4t0sandwich.tatersync.common.player.TaterPlayer;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,12 +13,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.PlayerInventory;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static ca.sperrer.p0t4t0sandwich.tatersync.bukkit.BukkitUtils.mapInventory;
 import static ca.sperrer.p0t4t0sandwich.tatersync.bukkit.BukkitUtils.mapPlayer;
 import static ca.sperrer.p0t4t0sandwich.tatersync.common.Utils.runTaskAsync;
+import static ca.sperrer.p0t4t0sandwich.tatersync.common.nbt.NBTHandler.parseInventoryFromNBT;
 
 public class TestInvCommand implements CommandExecutor {
     private final BukkitMain plugin = BukkitMain.getInstance();

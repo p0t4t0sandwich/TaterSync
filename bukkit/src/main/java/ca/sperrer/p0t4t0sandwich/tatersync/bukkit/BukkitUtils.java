@@ -1,7 +1,7 @@
 package ca.sperrer.p0t4t0sandwich.tatersync.bukkit;
 
 import ca.sperrer.p0t4t0sandwich.tatersync.common.player.TaterItem;
-import ca.sperrer.p0t4t0sandwich.tatersync.common.player.TaterItemMeta;
+import ca.sperrer.p0t4t0sandwich.tatersync.common.player.TaterItemTag;
 import ca.sperrer.p0t4t0sandwich.tatersync.common.player.TaterPlayer;
 import ca.sperrer.p0t4t0sandwich.tatersync.common.player.TaterInventory;
 import org.bukkit.Material;
@@ -32,9 +32,9 @@ public class BukkitUtils {
      * @param itemStack Bukkit ItemStack
      * @return TaterItem
      */
-    public static TaterItem mapItemStack(ItemStack itemStack) {
+    public static TaterItem mapItemStack(ItemStack itemStack, int Slot) {
         if (itemStack == null) {
-            return new TaterItem(Material.AIR.toString(), 0);
+            return null;
         }
 
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -44,7 +44,7 @@ public class BukkitUtils {
         System.out.println("Item: " + serializedItem);
         //
 
-        TaterItemMeta inventoryItemMeta = new TaterItemMeta(0, "", new String[0]);
+        TaterItemTag inventoryItemMeta = null;
         if (itemMeta != null) {
             Map<String, Object> serializedMeta = itemMeta.serialize();
 
@@ -52,19 +52,17 @@ public class BukkitUtils {
             System.out.println("ItemMeta: " + serializedMeta);
             //
 
-            inventoryItemMeta = new TaterItemMeta(
-                    (int) serializedMeta.getOrDefault("Damage", 0),
-                    (String) serializedMeta.getOrDefault("displayName", ""),
-                    (String[]) serializedMeta.getOrDefault("lore", new String[0])
-            );
+            inventoryItemMeta = new TaterItemTag();
+
+            inventoryItemMeta.setDamage((int) serializedMeta.getOrDefault("Damage", 0));
         }
 
         return new TaterItem(
-                (String) serializedItem.getOrDefault("type", Material.AIR.toString()),
-                (int) serializedItem.getOrDefault("amount", 0),
+                Slot,
+                "minecraft:" + ((String) serializedItem.get("type")).toLowerCase(),
+                (int) serializedItem.getOrDefault("amount", 1),
                 inventoryItemMeta
         );
-
     }
 
     /**
@@ -74,9 +72,15 @@ public class BukkitUtils {
      */
     public static TaterInventory mapInventory(Inventory inventory) {
         ItemStack[] bukkitItems = inventory.getContents();
-        TaterItem[] items = new TaterItem[inventory.getSize()];
+        TaterItem[] items = new TaterItem[0];
         for (int i = 0; i < inventory.getSize(); i++) {
-            items[i] = mapItemStack(bukkitItems[i]);
+            if (bukkitItems[i] == null || bukkitItems[i].getType() == Material.AIR) {
+                continue;
+            }
+            TaterItem[] newItems = new TaterItem[items.length + 1];
+            System.arraycopy(items, 0, newItems, 0, items.length);
+            newItems[items.length] = mapItemStack(bukkitItems[i], i);
+            items = newItems;
         }
         return new TaterInventory(inventory.getSize(), items);
     }

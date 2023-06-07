@@ -7,8 +7,10 @@ Inspired by [HuskSync](https://www.spigotmc.org/resources/husksync-1-16-1-19-syn
 
 - [ ] General Serialization
 - [ ] Inventory data serialization
+- [ ] Method of storing NBT in the database -- loading can then be 
 - [ ] Cross-API implementation
   - [ ] Need checks for modded-items, so they're not lost in translation
+    - [ ] Method to get all the mod item namespaces on a server -- check against this list when loading items
   - [ ] Need checks for version-specific items, so they're not lost in translation
   - [ ] Set some sort of placeholder item?
   - [ ] Set the item aside, and let the user know that they're not supported?
